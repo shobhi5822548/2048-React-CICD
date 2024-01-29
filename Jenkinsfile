@@ -67,6 +67,11 @@ pipeline{
                 sh "trivy image shobhi5822/2048:latest > trivy.txt" 
             }
         }
+        stage('Deploy to container'){
+            steps{
+                sh 'docker run -d --name 2048 -p 3000:3000 shobhi5822/2048:latest'
+            }
+        }
   
     }
 }
