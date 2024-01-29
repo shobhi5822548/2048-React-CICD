@@ -46,6 +46,11 @@ pipeline{
                 dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
             }
         }
+        stage('TRIVY FS SCAN') {
+            steps {
+                sh "trivy fs . > trivyfs.txt"
+            }
+        }
         stage("Docker Build & Push"){
             steps{
                 script{
@@ -57,10 +62,11 @@ pipeline{
                 }
             }
         }
-        stage('TRIVY FS SCAN') {
-            steps {
-                sh "trivy fs . > trivyfs.txt"
+      stage("TRIVY"){
+            steps{
+                sh "trivy image shobhi5822/2048:latest > trivy.txt" 
             }
         }
+  
     }
 }
