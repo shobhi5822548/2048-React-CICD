@@ -1,7 +1,7 @@
 pipeline{
     agent any
     tools{
-        jdk 'jdk17'
+        jdk 'java17'
         nodejs 'node16'
     }
     environment {
@@ -20,10 +20,12 @@ pipeline{
         }
         stage("Sonarqube Analysis "){
             steps{
+              script{
                 withSonarQubeEnv('sonar-server') {
                     sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=Game \
                     -Dsonar.projectKey=Game '''
                 }
+              }
             }
         }
         stage("quality gate"){
